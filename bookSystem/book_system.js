@@ -10,7 +10,7 @@ function addBook() {
             name: bookName,
             authorName: authorName,
             bookDescription: bookDescription,
-            pagesNumber: pagesNumber
+            pagesNumber: pagesNumber,
         };
         books.push(book);
         showbooks();
@@ -26,7 +26,8 @@ function showbooks() {
         <P><strong>Book Name: </strong>${book.name}</P>
         <p><strong>Author Name:</strong> ${book.authorName} </p>
         <p><strong>Book Description:</strong> ${book.bookDescription}</p>
-        <p><strong>No. of Pages:</strong> ${book.pagesNumber} mins</p>`
+        <p><strong>No. of Pages:</strong> ${book.pagesNumber} mins</p>
+        <button onclick="deleteBook(${index})">Delete</button><br>`
     )
     document.getElementById('books').innerHTML = booksDiv;
 }
@@ -36,4 +37,9 @@ function clearInputs() {
     document.getElementById('authorName').value = '';
     document.getElementById('bookDescription').value = '';
     document.getElementById('pagesNumber').value = '';
+}
+
+function deleteBook(id) {
+    books.splice(id, 1);
+    showbooks();
 }
