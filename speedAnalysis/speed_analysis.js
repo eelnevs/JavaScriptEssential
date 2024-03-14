@@ -11,6 +11,12 @@ let startTime, endTime;
 let totalLength = 0;
 let totalTime = 0;
 
+function enterKey(e) {
+    if (e.key === 'Enter') {
+        endTest();
+    }
+}
+
 function startTest() {
     // Set the test text
     document.getElementById("inputText").value = testText[Math.round(Math.random() * (testText.length-1))];
@@ -18,11 +24,7 @@ function startTest() {
     userText.value = "";
     userText.readOnly = false;
     userText.focus();
-    userText.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-            endTest();
-        }
-    })
+    userText.addEventListener('keydown', enterKey);
 
     // Reset results and timer
     document.getElementById("output").innerHTML = "";
@@ -38,7 +40,9 @@ function endTest() {
     endTime = new Date().getTime();
 
     // Disable user input
-    document.getElementById("userInput").readOnly = true;
+    userText = document.getElementById("userInput");
+    userText.readOnly = true;
+    userText.removeEventListener('keydown', enterKey);
 
     // Calculate time elapsed and words per minute (WPM)
     var timeElapsed = (endTime - startTime) / 1000; // in seconds
@@ -70,4 +74,13 @@ function endTest() {
     var button = document.getElementById("btn");
     button.innerHTML = "Start Test";
     button.onclick = startTest;
+}
+
+function reset() {
+    totalLength = 0;
+    totalTime = 0;
+    document.getElementById("inputText").value = "";
+    document.getElementById("userInput").value = "";
+    document.getElementById("output").innerHTML = "";
+    alert("Statistics has been reset!");
 }
