@@ -59,7 +59,9 @@ function checkMatch() {
     }
     selectedCards = [];
     gameContainer.disabled = false;
-    
+    if (score == 24) {
+        gameComplete();
+    }
 }
 
 function startGame() {
