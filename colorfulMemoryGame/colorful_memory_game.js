@@ -7,6 +7,7 @@ const totalTime = 60;
 let timeLeft = totalTime;
 
 const startbtn = document.getElementById('startbtn');
+const resetbtn = document.getElementById('resetbtn');
 const gameContainer = document.getElementById('game-container');
 const scoreElement = document.getElementById('score');
 const timerElement = document.getElementById('timer');
@@ -43,6 +44,7 @@ function handleCardClick(event) {
 }
 
 function checkMatch() {
+    gameContainer.disabled = true;
     const [card1, card2] = selectedCards;
     if (card1.dataset.color === card2.dataset.color) {
         card1.classList.add('matched');
@@ -56,12 +58,14 @@ function checkMatch() {
         card2.style.backgroundColor = '#ddd';
     }
     selectedCards = [];
+    gameContainer.disabled = false;
+    
 }
 
 function startGame() {
     let timeLeft = totalTime;
-    startbtn.disabled = true;
-    score = 0; // Reset score to zero
+    startbtn.textContent = "Restart";
+    startbtn.classList.toggle('Start');
     scoreElement.textContent = `Score: ${score}`;
     startGameTimer(timeLeft);
     cards = shuffle(colors.concat(colors));
@@ -78,12 +82,29 @@ function startGameTimer(timeLeft) {
         timerElement.textContent = `Time Left: ${timeLeft}`;
 
         if (timeLeft === 0) {
-            clearInterval(gameInterval);
-            let timeLeft = totalTime;
             alert('Game Over!');
-            startbtn.disabled = false;
+            reset();
         }
     }, 1000);
 }
 
-startbtn.addEventListener('click', startGame);
+function reset(scoreReset = false) {
+    clearInterval(gameInterval);
+    let timeLeft = totalTime;
+    startbtn.textContent = "Start";
+    startbtn.classList.toggle('Start');
+    timerElement.textContent = `Time Left: ${totalTime}`;
+    gameContainer.innerHTML = "";
+    if (scoreReset) score = 0;
+}
+
+function gameComplete() {
+    alert('You won!');
+    reset();
+}
+
+startbtn.addEventListener('click', () => {
+    if (startbtn.classList.contains('Start')) startGame();
+    else reset();
+});
+resetbtn.addEventListener('click', () => reset(true));
