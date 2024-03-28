@@ -51,6 +51,14 @@ h1 {
 }
 
 .matched {
+    cursor:unset;
+}
+
+.flipped {
+    cursor: unset;
+}
+
+.matched {
     background-color: #4CAF50;
     color: #fff;
 }

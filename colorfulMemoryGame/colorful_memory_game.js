@@ -63,7 +63,7 @@ function checkMatch() {
         card2.classList.remove('flipped');
     }
     selectedCards = [];
-    if (totalMatched == 24) {
+    if (totalMatched == 12) {
         gameComplete();
     }
     gameContainer.addEventListener('click', handleCardClick);
